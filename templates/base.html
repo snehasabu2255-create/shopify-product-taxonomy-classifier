@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Shopify Taxonomy AI Classifier{% endblock %}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        dark: {
+                            900: '#090d16',
+                            800: '#0f172a',
+                            700: '#131d33',
+                            600: '#1e293b',
+                            500: '#334155',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-[#0c1322] border-r border-slate-800/80 flex flex-col justify-between flex-shrink-0 min-h-screen sticky top-0">
+        <div>
+            <!-- Brand / Logo Header -->
+            <div class="h-16 flex items-center gap-3 px-6 border-b border-slate-800/80">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                    <i data-lucide="layers" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+                        Shopify AI
+                        <span class="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">Taxonomy</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-400">Enterprise Engine</p>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="p-4 space-y-1.5">
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all {% if request.path == '/' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold shadow-sm{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-800/50{% endif %}">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{% url 'review-queue' %}" class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all {% if '/review' in request.path %}bg-amber-500/15 text-amber-400 border border-amber-500/30 font-semibold shadow-sm{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-800/50{% endif %}">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                        <span>Review Queue</span>
+                    </div>
+                    <span id="nav-review-badge" class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 hidden">0</span>
+                </a>
+
+                <a href="/api/products/" target="_blank" class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                    <i data-lucide="code" class="w-4 h-4"></i>
+                    <span>DRF REST API</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 ml-auto text-slate-500"></i>
+                </a>
+
+                <a href="/admin/" target="_blank" class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    <span>Django Admin</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 ml-auto text-slate-500"></i>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer Status -->
+        <div class="p-4 border-t border-slate-800/80">
+            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[11px] font-medium text-slate-400">Database Engine</span>
+                    <span class="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-semibold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Active
+                    </span>
+                </div>
+                <p class="text-xs font-mono font-medium text-slate-300">MariaDB / Relational</p>
+                <div class="mt-2 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
+                    <span>Taxonomy Nodes:</span>
+                    <span class="font-mono text-slate-200 font-semibold">14,606</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0">
+        <!-- Topbar -->
+        <header class="h-16 bg-[#0c1322]/80 backdrop-blur-md border-b border-slate-800/80 flex items-center justify-between px-8 sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <h2 class="text-lg font-semibold text-white tracking-tight">{% block header_title %}Product Taxonomy Classifier{% endblock %}</h2>
+                <div class="h-4 w-[1px] bg-slate-700"></div>
+                <span class="text-xs text-slate-400 font-medium">Standard 2026-08 Taxonomy Integration</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/60 border border-slate-700/60 text-xs">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5 text-blue-400"></i>
+                    <span class="text-slate-400">AI Matcher:</span>
+                    <span class="font-semibold text-blue-300">TF-IDF Vector Engine</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Body Content -->
+        <main class="flex-1 p-8">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

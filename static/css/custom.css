@@ -1,0 +1,202 @@
+/* Modern Dark Mode & Executive Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --bg-primary: #090d16;
+    --bg-secondary: #0f172a;
+    --bg-card: #131d33;
+    --bg-card-hover: #192642;
+    --border-color: #1e293b;
+    --border-focus: #3b82f6;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --accent-emerald: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --accent-purple: #8b5cf6;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0b1120;
+}
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+/* Glassmorphic card styling */
+.glass-card {
+    background: rgba(19, 29, 51, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+}
+
+.glass-card-interactive {
+    background: rgba(19, 29, 51, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-interactive:hover {
+    border-color: rgba(59, 130, 246, 0.35);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5), 0 0 15px -3px rgba(59, 130, 246, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Glowing accent effects */
+.glow-blue {
+    box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.4);
+}
+.glow-emerald {
+    box-shadow: 0 0 20px -5px rgba(16, 185, 129, 0.4);
+}
+.glow-amber {
+    box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.4);
+}
+
+/* Custom Badges */
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+}
+
+.badge-classified {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-review {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-approved {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-unprocessed {
+    background-color: rgba(100, 116, 139, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+/* Confidence indicator ring & bars */
+.confidence-bar-bg {
+    background: #1e293b;
+    border-radius: 9999px;
+    height: 6px;
+    overflow: hidden;
+}
+.confidence-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.4s ease-out;
+}
+
+/* Slide-over Drawer */
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.drawer-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.drawer-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 640px;
+    background: #0f172a;
+    border-left: 1px solid #1e293b;
+    z-index: 51;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+.drawer-panel.active {
+    transform: translateX(0);
+}
+
+/* Toast Notifications */
+#toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.toast {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    animation: slideInRight 0.3s ease-out forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
